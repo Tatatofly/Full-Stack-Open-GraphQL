@@ -1,0 +1,23 @@
+{
+  "name": "full-stack-open-graphql",
+  "version": "1.0.0",
+  "description": "FullStackOpen GraphQL University of Helsinki",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tatatofly/Full-Stack-Open-GraphQL.git"
+  },
+  "author": "Tatu Toikkanen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tatatofly/Full-Stack-Open-GraphQL/issues"
+  },
+  "homepage": "https://github.com/Tatatofly/Full-Stack-Open-GraphQL#readme",
+  "dependencies": {
+    "apollo-server": "^2.5.0",
+    "graphql": "^14.3.0"
+  }
+}
