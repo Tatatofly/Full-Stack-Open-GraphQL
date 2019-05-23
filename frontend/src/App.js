@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
+import ModifyAuthor from './components/ModifyAuthor'
 import { gql } from 'apollo-boost'
 import { Query, Mutation, ApolloConsumer  } from 'react-apollo'
 
@@ -17,6 +18,15 @@ mutation createBook($title: String!, $published: Int!, $author: String!, $genres
     published
     author
     genres
+  }
+}
+`
+
+const EDIT_AUTHOR = gql`
+mutation editBorn($name: String!, $setBornTo: Int!) {
+  editAuthor(name: $name, setBornTo: $setBornTo)  {
+    name
+    born
   }
 }
 `
@@ -56,7 +66,7 @@ const App = () => {
       {(client => 
         <Query query={ALL_AUTHORS}>
           {(result) => 
-            <Authors result={result} client={client} show={page === 'authors'}/> 
+            <Authors result={result} client={client} show={page === 'authors'}/>
           }
         </Query> 
       )}
@@ -71,13 +81,21 @@ const App = () => {
         </Query> 
       )}
     </ApolloConsumer>
-
       
       <Mutation mutation={ADD_BOOK} refetchQueries={[{ query: ALL_AUTHORS },{ query: ALL_BOOKS }]} >
         {(addBook) =>
           <NewBook
             createBook={addBook}
             show={page === 'add'}
+          />
+        }
+      </Mutation>
+
+      <Mutation mutation={EDIT_AUTHOR} refetchQueries={[{ query: ALL_AUTHORS }]} >
+        {(editAuthor) =>
+          <ModifyAuthor
+            editBorn={editAuthor}
+            show={page === 'authors'}
           />
         }
       </Mutation>
