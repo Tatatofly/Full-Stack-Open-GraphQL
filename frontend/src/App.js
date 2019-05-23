@@ -14,15 +14,15 @@ const App = () => {
         <button onClick={() => setPage('add')}>add book</button>
       </div>
 
-      <Authors
+      <Authors 
         show={page === 'authors'}
       />
 
-      <Books
+      <Books 
         show={page === 'books'}
       />
 
-      <NewBook
+      <NewBook 
         show={page === 'add'}
       />
 
