@@ -5,6 +5,10 @@ const ModifyAuthor = (props) => {
   const [name, setName] = useState('')
   const [setBornTo, setBorn] = useState('')
 
+  const handleChange = (event) => {
+    setName(event.target.value)
+  }
+
   const submit = async (e) => {
     e.preventDefault()
 
@@ -12,8 +16,8 @@ const ModifyAuthor = (props) => {
       variables: { name, setBornTo }
     })
 
-    setName('')
     setBorn('')
+    setName('')
   }
 
   return (
@@ -21,10 +25,13 @@ const ModifyAuthor = (props) => {
       <h2>Set birthyear</h2>
       <form onSubmit={submit}>
         <div>
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
+          name 
+          <select value={name} onChange={handleChange}>
+            <option value="">Choose author...</option>
+            {props.authors.map(a =>
+              <option value={a.name} key={a.name}>{a.name}</option>
+            )}
+          </select>
         </div>
         <div>
           born <input
