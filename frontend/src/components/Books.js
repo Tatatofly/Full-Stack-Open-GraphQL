@@ -28,6 +28,7 @@ const Books = ({ result, show }) => {
   }
 
 const books = result.data.allBooks
+const authors = result.data.allAuthors
 
   return (
     <div>
@@ -44,9 +45,9 @@ const books = result.data.allBooks
           </th>
         </tr>
         {books.map(a =>
-          <tr key={a.title}>
+            <tr key={a.title}>
             <td>{a.title}</td>
-            <td></td>
+            <td>{authors.find(b => a.author.id === b.id).name}</td>
             <td>{a.published}</td>
           </tr>
         )}

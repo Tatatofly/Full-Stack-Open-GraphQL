@@ -25,24 +25,26 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
   })
 
 const typeDefs = gql`
-  type Book {
-    title: String!
-    published: Int!
-    author: Author!
-    genres: [String!]!
-    id: ID!
-  }
   type Author {
     name: String!
     born: Int
     bookCount: Int
+    id: ID!
+  }
+  type Book {
+    title: String!
+    published: Int!
+    author: Author!
+    genres: [String]!
+    id: ID!
   }
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String, genre: String): [Book]!
+    allBooks: [Book!]!
     allAuthors: [Author]!
     findAuthor(name: String!): Author
+    findAuthorId(id: String!): Author
   }
   type Mutation {
     addBook(
@@ -68,12 +70,13 @@ const resolvers = {
     allBooks: () => {
       return Book.find({})
     },
-    findAuthor: (root, args) => Author.findOne({ name: args.name })
+    findAuthor: (root, args) => Author.findOne({ name: args.name }),
+    findAuthorId: (root, args) => Author.findById({ id: args.id })
   },
   Book: {
     author: root => {
       return {
-        name: root.name
+        id: root.author
       }
     }
   },
@@ -92,7 +95,7 @@ const resolvers = {
     },
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
-      author.born = args.born
+      author.born = args.setBornTo
       return author.save()
     }
   }

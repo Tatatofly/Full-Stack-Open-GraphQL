@@ -39,8 +39,10 @@ const Authors = ({ result, show, authQuery }) => {
       )
     }
 
+  const books = result.data.allBooks
   const authors = result.data.allAuthors
-  
+
+
   return (
     <div>
       <h2>authors</h2>
@@ -60,7 +62,7 @@ const Authors = ({ result, show, authQuery }) => {
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
-              <td>{a.bookCount}</td> 
+              <td>{books.filter(function(item){return item.author.id === a.id}).length}</td> 
             </tr>
           )}
         </tbody>

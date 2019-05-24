@@ -25,7 +25,13 @@ const ALL_AUTHORS = gql`
   allAuthors  {
     name,
     born,
-    
+    bookCount,
+    id
+  }
+  allBooks  {
+    title,
+    published,
+    author { id }
   }
 }
 `
@@ -34,7 +40,13 @@ const ALL_BOOKS = gql`
 {
   allBooks  {
     title,
-    published
+    published,
+    author { id }
+  }
+  allAuthors  {
+    name,
+    born,
+    id
   }
 }
 `
