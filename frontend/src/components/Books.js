@@ -46,7 +46,7 @@ const books = result.data.allBooks
         {books.map(a =>
           <tr key={a.title}>
             <td>{a.title}</td>
-            <td>{a.author}</td>
+            <td></td>
             <td>{a.published}</td>
           </tr>
         )}

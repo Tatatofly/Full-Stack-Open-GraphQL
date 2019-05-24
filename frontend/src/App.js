@@ -15,7 +15,6 @@ mutation createBook($title: String!, $published: Int!, $author: String!, $genres
   ) {
     title
     published
-    author
     genres
   }
 }
@@ -26,7 +25,7 @@ const ALL_AUTHORS = gql`
   allAuthors  {
     name,
     born,
-    bookCount
+    
   }
 }
 `
@@ -35,7 +34,6 @@ const ALL_BOOKS = gql`
 {
   allBooks  {
     title,
-    author,
     published
   }
 }
