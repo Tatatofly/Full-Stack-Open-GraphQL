@@ -1,18 +1,6 @@
-import React, { useState } from 'react'
-import ModifyAuthor from './ModifyAuthor'
-import { Mutation } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import React from 'react'
 
-const EDIT_AUTHOR = gql`
-mutation editBorn($name: String!, $setBornTo: Int!) {
-  editAuthor(name: $name, setBornTo: $setBornTo)  {
-    name
-    born
-  }
-}
-`
-
-const Authors = ({ result, show, authQuery }) => {
+const Authors = ({ result, show }) => {
   if (!show) {
     return null
   }
@@ -68,14 +56,6 @@ const Authors = ({ result, show, authQuery }) => {
         </tbody>
       </table>
       </div>
-      <Mutation mutation={EDIT_AUTHOR} refetchQueries={[{ query: authQuery }]}>
-        {(editAuthor) =>
-          <ModifyAuthor
-            editBorn={editAuthor}
-            authors={authors}
-          />
-        }
-      </Mutation>
     </div>
   )
 }

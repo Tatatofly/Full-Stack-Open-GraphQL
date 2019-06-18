@@ -2,6 +2,14 @@ import React, { useState } from 'react'
 
 
 const ModifyAuthor = (props) => {
+  if (!props.show) {
+    return null
+  }
+
+  if ( props.result.loading )  {
+    return null
+  }
+
   const [name, setName] = useState('')
   const [setBornTo, setBorn] = useState('')
 
@@ -12,7 +20,7 @@ const ModifyAuthor = (props) => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await props.editBorn({
+    await props.modifyAuthor({
       variables: { name, setBornTo }
     })
 
@@ -28,7 +36,7 @@ const ModifyAuthor = (props) => {
           name 
           <select value={name} onChange={handleChange}>
             <option value="">Choose author...</option>
-            {props.authors.map(a =>
+            {props.result.data.allAuthors.map(a =>
               <option value={a.name} key={a.name}>{a.name}</option>
             )}
           </select>
