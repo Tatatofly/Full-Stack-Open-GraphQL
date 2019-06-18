@@ -5,7 +5,7 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import { gql } from 'apollo-boost'
-import { useMutation, useApolloClient, useQuery } from 'react-apollo-hooks' 
+import { useMutation, useQuery } from 'react-apollo-hooks' 
 
 const ADD_BOOK = gql`
 mutation createBook($title: String!, $published: Int!, $author: String!, $genres: [String]!) {
@@ -43,7 +43,8 @@ const ALL_BOOKS = gql`
   allBooks  {
     title,
     published,
-    author { id }
+    author { id },
+    genres
   }
   allAuthors  {
     name,
@@ -74,7 +75,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
 
-  const client = useApolloClient()
+  //(const client = useApolloClient()
 
   useEffect(() => {
     setToken(localStorage.getItem('library-user-token'))
@@ -140,6 +141,7 @@ const App = () => {
       <Authors result={authorsResult} show={page === 'authors'} />
       <ModifyAuthor modifyAuthor={editAuthor} result={authorsResult} show={page === 'authors'} />
       <Books result={booksResult} show={page === 'books'} />
+
       <NewBook createBook={addBook} show={page === 'add'} />
     </div>
   )
