@@ -91,7 +91,7 @@ const App = () => {
   const logout = (client) => {
     setToken(null)
     localStorage.clear()
-    //client.resetStore() Jostain syystä ei toimi tällä hetkellä
+    //client.resetStore() Jostain syystä ei toimi tällä hetkellä. Pidetään siis poissa käytöstä.
   }
 
   const authorsResult = useQuery(ALL_AUTHORS)
