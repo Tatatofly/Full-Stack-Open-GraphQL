@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Authors from './components/Authors'
 import ModifyAuthor from './components/ModifyAuthor'
 import Books from './components/Books'
+import Recommendations from './components/Recommendations'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import { gql } from 'apollo-boost'
@@ -54,6 +55,15 @@ const ALL_BOOKS = gql`
 }
 `
 
+const ME = gql`
+{
+  me {
+    username,
+    favoriteGenre
+  }
+}
+`
+
 const EDIT_AUTHOR = gql`
 mutation editBorn($name: String!, $setBornTo: Int!) {
   editAuthor(name: $name, setBornTo: $setBornTo)  {
@@ -96,6 +106,7 @@ const App = () => {
 
   const authorsResult = useQuery(ALL_AUTHORS)
   const booksResult = useQuery(ALL_BOOKS)
+  const userResult = useQuery(ME)
   const addBook = useMutation(ADD_BOOK, {
     refetchQueries: [{ query: ALL_AUTHORS }, { query: ALL_BOOKS }]
   })
@@ -133,6 +144,7 @@ const App = () => {
         <button onClick={() => setPage('authors')}>authors</button>
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
+        <button onClick={() => setPage('recom')}>recommend</button>
         <button onClick={logout}>logout</button>
       </div>
       <div>
@@ -141,7 +153,7 @@ const App = () => {
       <Authors result={authorsResult} show={page === 'authors'} />
       <ModifyAuthor modifyAuthor={editAuthor} result={authorsResult} show={page === 'authors'} />
       <Books result={booksResult} show={page === 'books'} />
-
+      <Recommendations result={booksResult} show={page === 'recom'} userResult={userResult} />
       <NewBook createBook={addBook} show={page === 'add'} />
     </div>
   )
