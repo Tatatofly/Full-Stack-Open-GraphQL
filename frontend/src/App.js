@@ -7,6 +7,18 @@ import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import { gql } from 'apollo-boost'
 import { useMutation, useQuery } from 'react-apollo-hooks' 
+import { Subscription } from 'react-apollo'
+
+const BOOK_DETAILS = gql`
+fragment BookDetails on Book {
+  title
+  published
+  author { 
+    name
+  }
+  genres
+}
+`
 
 const ADD_BOOK = gql`
 mutation createBook($title: String!, $published: Int!, $author: String!, $genres: [String]!) {
@@ -79,6 +91,15 @@ const LOGIN = gql`
       value
     }
   }
+`
+
+const BOOK_ADDED = gql`
+subscription {
+  BookAdded {
+    ...BookDetails
+  }
+}
+${BOOK_DETAILS} 
 `
 
 const App = () => {
@@ -155,6 +176,14 @@ const App = () => {
       <Books result={booksResult} show={page === 'books'} />
       <Recommendations result={booksResult} show={page === 'recom'} userResult={userResult} />
       <NewBook createBook={addBook} show={page === 'add'} />
+      <Subscription
+        subscription={BOOK_ADDED}
+        onSubscriptionData={({subscriptionData}) => {
+          console.log(subscriptionData)
+          window.alert(subscriptionData.data.bookAdded.title);
+        }}>
+        {() => null}
+      </Subscription>
     </div>
   )
 }
