@@ -5,7 +5,6 @@ import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import { gql } from 'apollo-boost'
-import { Query, Mutation  } from 'react-apollo'
 import { useMutation, useApolloClient, useQuery } from 'react-apollo-hooks' 
 
 const ADD_BOOK = gql`
